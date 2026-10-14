@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>An Interpretable Method of Learning Stochastic Game Dynamics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Advisor : Kostas Pelechrinis" />
+    <script src="Final_Pres_Nick_Slides_files/header-attrs/header-attrs.js"></script>
+    <link href="Final_Pres_Nick_Slides_files/remark-css/default.css" rel="stylesheet" />
+    <link href="Final_Pres_Nick_Slides_files/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="Final_Pres_Nick_Slides_files/htmlwidgets/htmlwidgets.js"></script>
+    <script src="Final_Pres_Nick_Slides_files/viz/viz.js"></script>
+    <link href="Final_Pres_Nick_Slides_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="Final_Pres_Nick_Slides_files/grViz-binding/grViz.js"></script>
+    <link rel="stylesheet" href="my.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# An Interpretable Method of Learning Stochastic Game Dynamics
+## Nicholas Ho, Sifan Tao, Adhvaith Vijay
+### Advisor : Kostas Pelechrinis
+### 2021/11/6
+
+---
+
+
+
+
+
+
+
+
+
+&lt;!-- Nick --&gt;
+## Introduction / Motivation
+
+--
+
+- Soccer is complicated
+
+--
+
+- StatbombR data only has tracking data of the ball, but not players
+
+- Avoid a player-location agnostic approach to modeling ball statistics
+
+--
+
+
+- Use potential functions - underlying functions that guide forces - to model ball dynamics
+
+- Use this to approximate final game outcomes
+
+
+
+---
+&lt;!-- Sifan  --&gt;
+## [StasbombR Data](https://github.com/statsbomb/StatsBombR)
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; team &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; time &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; type &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; location.x &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; location.y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Barcelona &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:02:40.501 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Dribble &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Barcelona &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:00:37.890 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Foul Committed &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Getafe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:01:39.139 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Interception &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Valencia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:48:06.967 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Offside &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 86.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Barcelona &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:00:00.229 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pass &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Barcelona &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 00:11:44.435 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Shot &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44.4 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+#### Data provided by [Statsbomb](https://github.com/statsbomb/open-data)
+
+
+---
+&lt;!-- Sifan 1--&gt;
+## Random Walk
+
+A sequence of some steps in random directions on some mathematical space.
+
+- A point randomly moves along the integer line
+
+- A point randomly moves on x-y plane
+
+--
+
+&lt;center&gt;&lt;img src="./pics/random_walk.png" width = "400px"/&gt;
+
+---
+&lt;!-- Sifan 2--&gt;
+## Potential Function
+
+- Idea: The ball is a randomly drifting ball that is attracted to the goal by some "force". 
+--
+
+- A ball placed in this vector field will move along the arrows of the vector field.
+
+&lt;br&gt;
+
+&lt;center&gt;![](https://cdn.kastatic.org/googleusercontent/wBalF7MINVVbEksIOvIBlO6RupAqyg5yY7nkoZ5p3bPTBCGjkrWAyTQtspKaMm9BIWRlMKj089R3R15hBDI5yFY)
+
+&lt;br&gt;
+.footnote[Khan Academy]
+
+---
+&lt;!-- Sifan 3--&gt;
+## Potential Function
+- We can try to model this underlying force based on the movements of the ball
+
+--
+
+- Our Potential Functions
+  - Gravity
+
+$$ V(x,y) = -\frac{G}{\sqrt{x^2 + y^2}} $$
+
+---
+## Random Walk under Harmonic Potential Function
+Using potential function as a guidance for random walk
+
+--
+
+- A step by the random particle under a force.
+`$$r(t_{i+1}) - r(t_i) = - \nabla V(r(t_i)) (t_{t+1} - t_i) + \sigma \sqrt{(t_{i+1} - t_i)} Z_{i+1}$$`
+
+  - `\(r(t_i)\)`: location of the ball at time i
+  - `\(V(r(t_i))\)`: potential function at time i
+  - `\(Z_{i}\)`: standard Gaussian
+
+--
+&lt;br&gt;
+
+
+- Small_Change = Estimated_Velocity x TimeStep + Noise
+
+
+&lt;!-- END OF SIFAN SLIDES --&gt;
+
+---
+&lt;!-- Nick  --&gt;
+## Learning Potential Functions from Trajectories
+
+- [Learning a Potential Function from a Trajectory -  Brillinger](https://statistics.berkeley.edu/sites/default/files/tech-reports/723.pdf)
+
+- Assumptions
+
+--
+
+  - Overdamped system, friction is high so force affects the velocity, not acceleration.
+  
+  - `\(V(x,y)\)` can be approximated as a linear combination of basis functions
+  
+  
+---
+
+## The Basis Functions
+
+- Our basis functions are a set of gravitational points on the field
+
+- The Coefficients Scale the strength of the hole (Attractive or Repulsive)
+
+$$V(x_i,y_i) = \sum \frac{\beta_i}{\sqrt{(x-x_i)^2 + (y-y_i)^2}} $$
+
+&lt;img src="./pics/basis_pic.png" width = "720px"/&gt;
+
+
+---
+
+## Overview of the Potential Fitting Model
+
+`$$V(x,y) = \phi(x,y)^T \beta$$`
+`$$Force = -\nabla V(x,y) = -\nabla \phi(x,y)^T \beta$$`
+
+--
+`$$Velocity \sim Force$$`
+--
+`$$\frac{dr(x,y)}{dt} = - \nabla V(x,y)$$`
+
+`$$\frac{dr(x,y)}{dt} = -\nabla \phi(x,y)^T \beta$$`
+This just becomes simple linear regression!
+
+
+---
+
+&lt;!-- Nick  --&gt;
+## Learning Potential Functions from Trajectories
+
+<div id="htmlwidget-454069952e3b7d245ee8" style="width:100%;height:360px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-454069952e3b7d245ee8">{"x":{"diagram":"digraph {\n\ngraph [layout = dot, rankdir = TB]\n\n# define the global styles of the nodes. We can override these in box if we wish\nnode [shape = rectangle, style = filled, fillcolor = Linen]\n\nStatBomb [label = \"StatBombR\", shape = folder, fillcolor = Beige]\ndata1 [label = \"Teams Offensive \n Trajectories\", shape = folder, fillcolor = Beige]\ndata2 [label = \"Teams Defensive \n Trajectories\", shape = folder, fillcolor = Beige]\nfit_function [label =  \"Fit Potential \n Function Model\"]\noff_coef [label = \"Teams Offensive \n Coefficients\", shape = folder, fillcolor = Beige]\ndef_coef [label = \"Teams Defensive \n Coefficients\", shape = folder, fillcolor = Beige]\n\n# edge definitions with the node IDs\nStatBomb -> {data1 data2}  -> fit_function -> {off_coef, def_coef}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+
+---
+&lt;!-- Nick  --&gt;
+## Simulating Games using the learned Potential Functions
+
+- Overlay the potential coefficients (additive) and simulating
+
+<div id="htmlwidget-69b964bee6d989b2f25e" style="width:100%;height:360px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-69b964bee6d989b2f25e">{"x":{"diagram":"digraph {\n\ngraph [layout = dot, rankdir = LR]\n\n# define the global styles of the nodes. We can override these in box if we wish\nnode [shape = rectangle, style = filled, fillcolor = Linen]\n\nStatBomb [label = \"StatBombR match \n data\", shape = folder, fillcolor = Beige]\nOverlayCoef [label =  \"Overlay \n Coefficients\"]\nSimGame [label =  \"Simulate Game \n Model\"]\nGame_Avg_Pred [label =  \"Averaged Score \n Prediction\"]\n\n\noff_coef [label = \"Teams Offensive \n Coefficients\", shape = folder, fillcolor = Beige]\ndef_coef [label = \"Teams Defensive \n Coefficient\", shape = folder, fillcolor = Beige]\n\n# edge definitions with the node IDs\n{off_coef, def_coef,StatBomb }  -> OverlayCoef -> SimGame -> SimGame -> Game_Avg_Pred\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+---
+
+## Potential Surface Contour
+
+
+- Contour Map of Arsenal's Defensive and Manchester's Offensive
+
+- Showing the maps change over time
+
+&lt;img src="./pics/3d_2d.gif" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+## One realization of a game simulation
+
+- Because the offensive and defensive coefficients are swapped based on possession
+
+- Heatmap of a simulated Game Trajectory
+&lt;img src="./pics/trajectory.png" width = "600px"/&gt;
+
+
+---
+&lt;!-- Adhvaith and Nick--&gt;
+
+### Simulated Game Shot Example
+
+
+&lt;!-- &lt;img src="./pics/min16.png" width = "600px"/&gt; --&gt;
+
+&lt;img src="./pics/first_goal.gif" width="100%" /&gt;
+
+
+
+
+---
+### Web App to Generate Simulations
+
+- https://cmsac-soccer-potential.herokuapp.com/
+
+- Select teams and run simulations
+
+
+---
+### Connecting Statistical Mechanics to Soccer Potential Functions
+
+- By setting up our model this way, we can find the stationary distribution of the particle
+
+$$ P(E) = \frac{1}{Z} \exp{[\frac{-E}{k_\beta T}]} $$
+
+- Thus we know the equilibrium probability distribution conditioned by time.
+
+  - Step Size + Noise are directly influenced by Temperature
+
+--
+  
+- We can also marginalize over time to get a time-independent equilibrium distribution
+
+`$$\sum_{t = 0}^{t = 89} P_{\pi} (x,y | t) dt$$`
+- But instead we opt to sample score differentials by directly simulating games, this way we can add more detailed submodels
+
+---
+### Now we can sample score distributions
+
+- The model can provide a distribution of score differentials instead of a point estimate
+
+- May be unimodel or multimodal based on the teams competing
+
+&lt;img src="./pics/Score_Distributions.png" width="90%" /&gt;
+
+
+---
+## Comparisons with Other Models
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Baseline Model &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Poisson Regression Model &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Our Potential Model &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; MSE &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.597 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.607 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.379 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Residual Variance &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.388 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.519 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.367 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;img src="./pics/baseline_comparisons.png" width = "1500" height = "500"/&gt;
+
+
+---
+
+## Comparisons Summary
+
+- The averaged baseline model has a bias and fails to capture larger score differential
+
+- The poisson regression model is better at predicting larger score differentials, but has larger residual variance
+
+- Our model can predict larger score differential, and has a lower residual variance
+
+
+--
+
+
+- Our model ("trained" on velocities) does just as well as models trained directly on the scores 
+
+
+
+---
+&lt;!-- Nick --&gt;
+## Discussion and Future Work
+
+- Potential functions as a viable way can summarize ball dynamics, as can be seen by the score predictions.
+
+- Making the model more expressive by using other basis functions
+
+- Lots of potential to improve the framework with more accurate sub-models
+
+  - Shot Decision model and Goal Decision model
+  
+  - Incorporate team formation and score differential into the potential function
+  
+  
+- This framework can be used to determine other things such as:
+
+  - Player-based potential functions to determine player impacts
+  
+- This framework of using potential energy can be further tied to methods in statistical mechanics
+  - For example tying the idea of "free energy" quantify the value of certain trajectories. 
+
+
+
+
+
+---
+&lt;!-- Nick --&gt;
+
+## Appendix: Game Simulation
+
+<div id="htmlwidget-768b08217f9f7049b684" style="width:100%;height:504px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-768b08217f9f7049b684">{"x":{"diagram":"digraph {\n\ngraph [layout = dot, rankdir = TB]\n\n# define the global styles of the nodes. We can override these in box if we wish\nnode [shape = rectangle, style = filled, fillcolor = Linen]\n\nStart_Game [label = \"Start Game\"]\nstartPoss [label =  \"50-50 Determine \n Possession\"]\nRandStep [label =  \"Random Walk Step \n Under Potential\"]\nBound [label =  \"Boundary Checks\"]\nGoalbounds [label =  \"Close to goal?\"]\nshot [label =  \"Decides to Shoot\"]\nnoshot [label =  \"Decides to NOT Shoot\"]\ngoal [label =  \"Decides to Shoot\"]\nscore [label =  \"SCORE\"]\nmiss [label =  \"Miss\"]\nupdate_score [label =  \"Update Score\"]\nupdate_time [label =  \"Update time\"]\n\n# edge definitions with the node IDs\nStart_Game -> startPoss -> RandStep -> Bound -> Goalbounds\nGoalbounds -> RandStep\nGoalbounds -> shot\nshot -> goal -> score -> update_score -> update_time -> startPoss\ngoal -> miss -> update_time -> RandStep\nGoalbounds -> noshot -> update_time -> RandStep\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

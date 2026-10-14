@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adhvaith Vijay | Data Scientist</title>
+    <meta name="description" content="Adhvaith Vijay is a data scientist working across battery reliability, retail shopper analytics, credit and fraud risk, and aerospace. Senior Data Scientist at Tesla.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fbfaf7;
+            --surface: #ffffff;
+            --text: #1c1d21;
+            --muted: #5d6068;
+            --line: #e6e3dc;
+            --accent: #b4441f;
+            --accent-soft: #f6e7e0;
+            --chip: #f1efe9;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121316;
+                --surface: #1a1c20;
+                --text: #ecebe7;
+                --muted: #a3a6ad;
+                --line: #2c2f35;
+                --accent: #f08a62;
+                --accent-soft: #2e211c;
+                --chip: #23262b;
+            }
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 16px/1.6 "Inter", system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* Nav */
+        nav.top {
+            position: sticky; top: 0; z-index: 10;
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
+        }
+        nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+        nav.top .name { font-weight: 600; color: var(--text); }
+        nav.top ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; font-size: 14px; }
+        nav.top ul a { color: var(--muted); }
+        nav.top ul a:hover { color: var(--text); text-decoration: none; }
+
+        /* Hero */
+        .hero { padding: 88px 0 56px; }
+        .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+        h1 {
+            font-family: "Newsreader", Georgia, serif; font-weight: 600;
+            font-size: clamp(36px, 5.5vw, 56px); line-height: 1.08; letter-spacing: -.01em;
+            margin: 14px 0 20px; max-width: 18ch;
+        }
+        .lede { font-size: 19px; color: var(--muted); max-width: 62ch; margin: 0 0 28px; }
+        .lede strong { color: var(--text); font-weight: 600; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: 999px; font-weight: 500; font-size: 15px;
+            border: 1px solid var(--line); color: var(--text); background: var(--surface);
+        }
+        .btn:hover { text-decoration: none; border-color: var(--muted); }
+        .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+        /* Sections */
+        section { padding: 56px 0; border-top: 1px solid var(--line); }
+        h2 {
+            font-family: "Newsreader", Georgia, serif; font-weight: 600;
+            font-size: 30px; margin: 0 0 8px; letter-spacing: -.005em;
+        }
+        .section-sub { color: var(--muted); margin: 0 0 32px; max-width: 64ch; }
+
+        /* Domains */
+        .domains { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+        .domain {
+            background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px;
+        }
+        .domain .icon { font-size: 22px; line-height: 1; }
+        .domain h3 { font-size: 16px; margin: 12px 0 6px; }
+        .domain p { margin: 0; font-size: 14.5px; color: var(--muted); }
+        .domain .where { margin-top: 12px; font-size: 13px; font-weight: 500; color: var(--accent); }
+
+        /* Experience */
+        .job { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+        .job:last-child { border-bottom: 0; }
+        .job .when { color: var(--muted); font-size: 14px; padding-top: 2px; }
+        .job h3 { margin: 0; font-size: 17px; }
+        .job .org { color: var(--muted); font-size: 15px; margin: 2px 0 10px; }
+        .job ul { margin: 0; padding-left: 18px; }
+        .job li { margin: 4px 0; font-size: 15px; }
+        .job li b { font-weight: 600; }
+
+        /* Featured */
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .card {
+            display: flex; flex-direction: column;
+            background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px;
+            color: var(--text);
+        }
+        a.card:hover { text-decoration: none; border-color: var(--accent); }
+        .card .tag {
+            align-self: flex-start; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+            background: var(--accent-soft); color: var(--accent); padding: 4px 10px; border-radius: 999px;
+        }
+        .card h3 { font-size: 18px; line-height: 1.35; margin: 14px 0 8px; }
+        .card p { margin: 0 0 14px; font-size: 14.5px; color: var(--muted); flex: 1; }
+        .card .go { font-size: 14px; font-weight: 500; color: var(--accent); }
+
+        /* Projects */
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+        .project { padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+        .project h3 { font-size: 15.5px; margin: 0 0 4px; }
+        .project p { margin: 0; font-size: 14px; color: var(--muted); }
+
+        /* Skills + awards */
+        .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 20px; }
+        .chip { background: var(--chip); border-radius: 8px; padding: 5px 10px; font-size: 13.5px; }
+        h4 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+        .awards { list-style: none; margin: 10px 0 0; padding: 0; }
+        .awards li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+        .awards li span { display: block; font-size: 13.5px; color: var(--muted); }
+
+        /* Education */
+        .edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .edu div { padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+        .edu b { display: block; }
+        .edu span { color: var(--muted); font-size: 14.5px; }
+
+        /* Contact */
+        .contact { text-align: center; padding: 72px 0; }
+        .contact h2 { font-size: 34px; }
+        .contact p { color: var(--muted); margin: 0 auto 26px; max-width: 52ch; }
+        .contact .actions { justify-content: center; }
+
+        footer { padding: 28px 0 40px; color: var(--muted); font-size: 13px; text-align: center; border-top: 1px solid var(--line); }
+
+        @media (max-width: 720px) {
+            nav.top ul { display: none; }
+            .hero { padding: 56px 0 40px; }
+            .job { grid-template-columns: 1fr; gap: 4px; }
+            .two { grid-template-columns: 1fr; gap: 24px; }
+            .wrap { padding: 0 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="top">
+        <div class="wrap">
+            <a class="name" href="#top">Adhvaith Vijay</a>
+            <ul>
+                <li><a href="#domains">Domains</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#work">Featured work</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="top">
+        <header class="hero">
+            <div class="wrap">
+                <div class="eyebrow">Senior Data Scientist · Tesla</div>
+                <h1>Data science that ships, in whatever domain the problem lives.</h1>
+                <p class="lede">
+                    I build models that make high-stakes decisions in production. At Tesla, <strong>every 4680 battery cell
+                    passes through my computer vision models</strong> as the final quality gate before it goes into a vehicle.
+                    Before that, I worked on shopper analytics in retail, credit and fraud risk in banking, and engine
+                    maintenance in aerospace.
+                </p>
+                <div class="actions">
+                    <a class="btn primary" href="images/Adhvaith_Vijay_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+                    <a class="btn" href="https://www.linkedin.com/in/adhvaithvijay/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a class="btn" href="https://github.com/avaitt" target="_blank" rel="noopener">GitHub</a>
+                    <a class="btn" href="mailto:adhvaith.vijay@gmail.com">Email</a>
+                </div>
+            </div>
+        </header>
+
+        <section id="domains">
+            <div class="wrap">
+                <h2>Domains</h2>
+                <p class="section-sub">Different industries, the same core work: turn messy, high-volume data into a decision someone can trust.</p>
+                <div class="domains">
+                    <div class="domain">
+                        <div class="icon">🔋</div>
+                        <h3>Lithium-ion battery reliability</h3>
+                        <p>CT-scan computer vision, defect detection, and thermal-runaway risk forecasting from fleet telemetry.</p>
+                        <div class="where">Tesla</div>
+                    </div>
+                    <div class="domain">
+                        <div class="icon">🛒</div>
+                        <h3>Shopper behavior analytics</h3>
+                        <p>3D pose data, in-store A/B testing, and layout simulation for physical retail.</p>
+                        <div class="where">Standard AI</div>
+                    </div>
+                    <div class="domain">
+                        <div class="icon">💳</div>
+                        <h3>Credit &amp; fraud risk</h3>
+                        <p>Loan default modeling at scale, with explanations built for regulatory audits.</p>
+                        <div class="where">JPMorgan Chase</div>
+                    </div>
+                    <div class="domain">
+                        <div class="icon">✈️</div>
+                        <h3>Aerospace maintenance</h3>
+                        <p>Engine health algorithms and geospatial tooling for fleet maintenance.</p>
+                        <div class="where">Rolls-Royce</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="wrap">
+                <h2>Experience</h2>
+                <p class="section-sub">Selected impact. The full detail is in the <a href="images/Adhvaith_Vijay_Resume.pdf" target="_blank" rel="noopener">resume</a>.</p>
+
+                <div class="job">
+                    <div class="when">Jul 2024 – Present</div>
+                    <div>
+                        <h3>Senior Data Scientist</h3>
+                        <div class="org">Tesla · Cell Quality</div>
+                        <ul>
+                            <li>Built and deployed U-Net models that segment <b>50+ battery components from CT scans</b>, reaching <b>98% recall</b> on critical checks across <b>2,000+ new batteries a day</b>. They are the final quality gate for every Tesla 4680 cell.</li>
+                            <li>Forecast thermal-runaway risk over the battery warranty life using telemetry from <b>3.5 million vehicles</b>, to qualify next-generation cells.</li>
+                            <li>Maintain the ETL and dashboard pipeline for CT metrology (electrode overhang, core concavity, cathode gap), which saves <b>200+ technician hours a week</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="when">Dec 2023 – Jun 2024</div>
+                    <div>
+                        <h3>Data Scientist</h3>
+                        <div class="org">Standard AI · Retail computer vision</div>
+                        <ul>
+                            <li>Built a marketing measurement product on real-time 3D pose data that generated <b>$600K in new revenue</b> for a client in 3 months.</li>
+                            <li>Led in-store A/B tests at Compass Group USA that raised interaction-to-purchase conversion by <b>7 percentage points</b>.</li>
+                            <li>Built a Monte Carlo engine for shelf-to-shelf transitions. Layout changes based on it lifted entrance-area revenue by <b>15%</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="when">Jan 2023 – Sep 2023</div>
+                    <div>
+                        <h3>Cell Engineer Intern</h3>
+                        <div class="org">Tesla</div>
+                        <ul>
+                            <li>Built a Vision Transformer that detects core impingement and collapse in CT scans, improving defect recall by <b>40%</b>.</li>
+                            <li>Replaced several <b>$27K Keyence machines</b> with a CT-based method that measures cell bulge to within <b>50 µm</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="when">Jun 2022 – Aug 2022</div>
+                    <div>
+                        <h3>Summer Associate, Credit Fraud Risk</h3>
+                        <div class="org">JPMorgan Chase &amp; Co. · Consumer &amp; Community Banking</div>
+                        <ul>
+                            <li>Improved the PySpark small-business loan default model by <b>14%</b> with features for erratic repayment, seasonal revenue, and spikes in credit utilization.</li>
+                            <li>Made high-risk applicant segments explainable for federal regulatory audits using feature binning and hierarchical clustering.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="when">Oct 2019 – May 2020</div>
+                    <div>
+                        <h3>Undergraduate Researcher</h3>
+                        <div class="org">Rolls-Royce North America</div>
+                        <ul>
+                            <li>Built an algorithm for the optimal compressor wash interval on AE3007 engines and shipped it as an R Shiny app, cutting analysis time from <b>3–4 hours to under 5 minutes</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="when">Earlier</div>
+                    <div>
+                        <h3>Research &amp; internships</h3>
+                        <div class="org">Carnegie Mellon University (Summer Research Fellow, 2021) · LPL Financial (Information Security Intern, 2019)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="work">
+            <div class="wrap">
+                <h2>Featured work</h2>
+                <p class="section-sub">Public write-ups of work I've contributed to, plus my patent and papers.</p>
+                <div class="cards">
+                    <a class="card" href="https://www.tesla.com/learn/engineering-tesla-vehicle-batteries-safety-durability-longevity" target="_blank" rel="noopener">
+                        <span class="tag">Battery · Tesla</span>
+                        <h3>Engineering Tesla Vehicle Batteries for Safety, Durability and Longevity</h3>
+                        <p>How Tesla inspects every 4680 cell, using X-ray, CT scanning and AI-based defect detection, and how fleet telemetry feeds back into battery safety. This is the area my models and risk forecasting work in.</p>
+                        <span class="go">Read on tesla.com →</span>
+                    </a>
+                    <a class="card" href="https://standard.ai/why-traditional-heatmaps-are-failing-retailers-and-whats-next/" target="_blank" rel="noopener">
+                        <span class="tag">Retail · Standard AI</span>
+                        <h3>Heatmaps Are Failing Retailers. What's Next?</h3>
+                        <p>Why camera-by-camera heatmaps mislead retailers, and how 3D spatial reconstruction of real shopper paths gives a truer picture of in-store behavior.</p>
+                        <span class="go">Read on standard.ai →</span>
+                    </a>
+                    <a class="card" href="https://patents.google.com/patent/US20240193497A1/en" target="_blank" rel="noopener">
+                        <span class="tag">Patent</span>
+                        <h3>Subject-tracking in a cashier-less store for spatial analytics</h3>
+                        <p>US 2024/0193497 A1. Co-inventor on using subject tracking in autonomous-checkout stores to improve item and shelf placement.</p>
+                        <span class="go">View patent →</span>
+                    </a>
+                    <div class="card">
+                        <span class="tag">Paper · Under review</span>
+                        <h3>Analyzing the Shopping Journey: Computing Shelf Visits in a Physical Retail Store</h3>
+                        <p>Submitted to IEEE RO-MAN (34th International Conference on Robot and Human Interactive Communication). First author.</p>
+                    </div>
+                    <a class="card" href="https://avaitt.github.io/CMSAC-Soccer-Presentation/soccer.html#1" target="_blank" rel="noopener">
+                        <span class="tag">Research · CMSAC 2021</span>
+                        <h3>An Interpretable Method of Learning Stochastic Game Dynamics</h3>
+                        <p>Models a soccer ball's movement with learned potential functions to simulate matches. Captures large score differentials better than Poisson regression. Presented at the Carnegie Mellon Sports Analytics Conference.</p>
+                        <span class="go">View slides →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="wrap">
+                <h2>Projects &amp; competitions</h2>
+                <p class="section-sub">Earlier side projects, mostly from UCLA DataRes and datathons.</p>
+                <div class="projects">
+                    <div class="project">
+                        <h3><a href="https://devpost.com/software/rice-datathon-chevron-track" target="_blank" rel="noopener">Forecasting hot dog sales for Chevron</a></h3>
+                        <p>1st place in the Chevron track at the Rice Datathon. Lowest RMSE of 45 teams.</p>
+                    </div>
+                    <div class="project">
+                        <h3><a href="research/Retina.ai_Submission.pdf" target="_blank" rel="noopener">Customer lifetime value analysis</a></h3>
+                        <p>Projected 5- and 10-year customer lifetime value for an eCommerce company and recommended focusing on its highest spenders. Won 2nd place overall at the Retina AI Datathon.</p>
+                    </div>
+                    <div class="project">
+                        <h3><a href="https://ucladatares.medium.com/make-a-monet-image-style-transfer-with-cycle-gans-5475dcb525b8" target="_blank" rel="noopener">Make-A-Monet</a></h3>
+                        <p>Image style transfer with CycleGAN and Pix2Pix, served through a Plotly Dash app.</p>
+                    </div>
+                    <div class="project">
+                        <h3>California wildfire crisis</h3>
+                        <p>Led a team of six on a geospatial analysis of a decade of CAL FIRE data.</p>
+                    </div>
+                    <div class="project">
+                        <h3>COVID-19 vaccine rollout</h3>
+                        <p>Prophet forecasts of vaccination milestones, plus Twitter sentiment analysis.</p>
+                    </div>
+                    <div class="project">
+                        <h3><a href="https://adhvaith-vijay.shinyapps.io/cmsacamp-eda-project/" target="_blank" rel="noopener">Variability in baseball stadiums</a></h3>
+                        <p>R Shiny app showing how ballpark dimensions affect batting outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="wrap two">
+                <div>
+                    <h2>Toolkit</h2>
+                    <h4>Languages &amp; ML</h4>
+                    <div class="chips">
+                        <span class="chip">Python</span><span class="chip">R</span><span class="chip">SQL</span>
+                        <span class="chip">PyTorch</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span>
+                        <span class="chip">Computer vision</span>
+                    </div>
+                    <h4>Data &amp; MLOps</h4>
+                    <div class="chips">
+                        <span class="chip">Airflow</span><span class="chip">dbt</span><span class="chip">Databricks</span>
+                        <span class="chip">Snowflake</span><span class="chip">AWS</span><span class="chip">Docker</span>
+                        <span class="chip">Git</span><span class="chip">H2O</span>
+                    </div>
+                    <h4>Analytics</h4>
+                    <div class="chips">
+                        <span class="chip">A/B testing</span><span class="chip">Monte Carlo simulation</span>
+                        <span class="chip">Tableau</span><span class="chip">Looker</span><span class="chip">Power BI</span><span class="chip">Plotly</span>
+                    </div>
+                </div>
+                <div>
+                    <h2>Awards</h2>
+                    <ul class="awards">
+                        <li>1st Place, Chevron Track<span>Rice University Datathon · 2021</span></li>
+                        <li>2nd Place, Prosperity Track<span>UCSD DataHacks · 2021</span></li>
+                        <li>1st Place Overall<span>DSS Datathon for Social Good, UC Berkeley · 2020</span></li>
+                        <li>3rd Place, City Search Track<span>TAMU Datathon · 2020</span></li>
+                        <li>2nd Place Overall<span>Retina AI R Datathon · 2020</span></li>
+                        <li>Gandhi Memorial Scholarship<span>San Diego Indian American Society · 2019</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <div class="wrap">
+                <h2>Education</h2>
+                <div class="edu" style="margin-top: 20px;">
+                    <div><b>M.S. Data Science</b><span>University of California, San Diego · 2024</span></div>
+                    <div><b>B.S. Statistics and Data Science</b><span>University of California, Los Angeles · 2022</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="wrap">
+                <h2>Let's talk</h2>
+                <p>Based in the San Francisco Bay Area. I'm happy to hear about data science roles and interesting problems in any domain.</p>
+                <div class="actions">
+                    <a class="btn primary" href="mailto:adhvaith.vijay@gmail.com">adhvaith.vijay@gmail.com</a>
+                    <a class="btn" href="https://calendly.com/adhvaith-vijay" target="_blank" rel="noopener">Book a call</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>© 2026 Adhvaith Vijay</footer>
+
+</body>
+
+</html>
