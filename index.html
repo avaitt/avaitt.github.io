@@ -284,7 +284,7 @@
                         <ul>
                             <li>Built and deployed U-Net models that segment <b>50+ battery components from CT scans</b>, reaching <b>98% recall</b> on critical checks across <b>2,000+ new batteries a day</b>. They are the final quality gate for every Tesla 4680 cell.</li>
                             <li>Forecast thermal-runaway risk over the battery warranty life using telemetry from <b>3.5 million vehicles</b>, to qualify next-generation cells.</li>
-                            <li>Maintain the ETL and dashboard pipeline for CT metrology (electrode overhang, core concavity, cathode gap), which saves <b>200+ technician hours a week</b>.</li>
+                            <li>Built a Celery/Redis ETL pipeline on 6 VMs that runs CT inference in <b>under 1 minute per scan</b>, logs metrology to a central database, and triggers Splunk alerts on out-of-spec cells, saving <b>200+ technician hours a week</b>.</li>
                         </ul>
                     </div>
                 </div>
