@@ -66,6 +66,9 @@
 
         /* Hero */
         .hero { padding: 88px 0 56px; }
+        .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+        .headshot { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; object-position: 50% 35%;
+            border: 4px solid var(--surface); box-shadow: 0 6px 24px rgba(0,0,0,.12); }
         .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
         h1 {
             font-family: "Newsreader", Georgia, serif; font-weight: 600;
@@ -73,7 +76,8 @@
             margin: 14px 0 20px; max-width: 18ch;
         }
         .tagline { font-size: 22px; font-weight: 600; color: var(--accent); margin: 0 0 18px; }
-        .lede { font-size: 19px; color: var(--muted); max-width: 62ch; margin: 0 0 28px; }
+        .lede { font-size: 19px; color: var(--muted); max-width: 62ch; margin: 0 0 18px; }
+        .lede + .actions { margin-top: 10px; }
         .lede strong { color: var(--text); font-weight: 600; }
         .actions { display: flex; flex-wrap: wrap; gap: 12px; }
         .btn {
@@ -168,6 +172,8 @@
         @media (max-width: 720px) {
             nav.top ul { display: none; }
             .hero { padding: 56px 0 40px; }
+            .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+            .headshot { width: 140px; height: 140px; order: -1; }
             .two { grid-template-columns: 1fr; gap: 24px; }
             .wrap { padding: 0 16px; }
         }
@@ -191,7 +197,8 @@
 
     <main id="top">
         <header class="hero">
-            <div class="wrap">
+            <div class="wrap hero-grid">
+                <div class="hero-text">
                 <div class="eyebrow">Senior Data Scientist · Tesla</div>
                 <h1>Data science that ships, in whatever domain the problem lives.</h1>
                 <p class="tagline">Product-Focused Data Scientist Turning Models into Decisions</p>
@@ -199,12 +206,14 @@
                     I build models that make high-stakes decisions in production. At Tesla, <strong>every 4680 battery cell
                     passes through my computer vision models</strong> as the final quality gate before it goes into a vehicle.
                     Before that, I worked on customer analytics in retail, credit and fraud risk in banking, and engine
-                    maintenance in aerospace.
+                    maintenance in aerospace. I'm driven by building data products that people actually rely on.
                 </p>
                 <div class="actions">
                     <a class="btn primary" href="https://www.linkedin.com/in/adhvaithvijay/" target="_blank" rel="noopener">LinkedIn</a>
                     <a class="btn" href="mailto:adhvaith.vijay@gmail.com">Email</a>
                 </div>
+                </div>
+                <img class="headshot" src="images/headshot.jpg" alt="Adhvaith Vijay" width="240" height="240">
             </div>
         </header>
 
