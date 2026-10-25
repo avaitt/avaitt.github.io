@@ -139,12 +139,6 @@
         .card p { margin: 0 0 14px; font-size: 14.5px; color: var(--muted); flex: 1; }
         .card .go { font-size: 14px; font-weight: 500; color: var(--accent); }
 
-        /* Projects */
-        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-        .project { padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-        .project h3 { font-size: 15.5px; margin: 0 0 4px; }
-        .project p { margin: 0; font-size: 14px; color: var(--muted); }
-
         /* Skills + awards */
         .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 20px; }
@@ -189,7 +183,6 @@
                 <li><a href="#work">Featured work</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#awards">Awards</a></li>
-                <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -291,6 +284,12 @@
                         <p>Models a soccer ball's movement with learned potential functions to simulate matches. Captures large score differentials better than Poisson regression. Presented at the Carnegie Mellon Sports Analytics Conference.</p>
                         <span class="go">View slides →</span>
                     </a>
+                    <a class="card" href="https://ucladatares.medium.com/make-a-monet-image-style-transfer-with-cycle-gans-5475dcb525b8" target="_blank" rel="noopener">
+                        <span class="tag">Project · UCLA DataRes</span>
+                        <h3>Make-A-Monet: Image Style Transfer with CycleGANs</h3>
+                        <p>Turns everyday photos into Monet-style paintings with CycleGAN and Pix2Pix, served through an interactive Plotly Dash app.</p>
+                        <span class="go">Read on Medium →</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -345,31 +344,6 @@
                         <li>2nd Place Overall<span>Retina AI R Datathon · 2020</span></li>
                         <li>Gandhi Memorial Scholarship<span>San Diego Indian American Society · 2019</span></li>
                     </ul>
-            </div>
-        </section>
-
-        <section id="projects">
-            <div class="wrap">
-                <h2>Projects</h2>
-                <p class="section-sub">Earlier side projects, mostly from UCLA DataRes and datathons.</p>
-                <div class="projects">
-                    <div class="project">
-                        <h3><a href="research/Retina.ai_Submission.pdf" target="_blank" rel="noopener">Customer lifetime value analysis</a></h3>
-                        <p>Projected 5- and 10-year customer lifetime value for an eCommerce company and recommended focusing on its highest spenders. Won 2nd place overall at the Retina AI Datathon.</p>
-                    </div>
-                    <div class="project">
-                        <h3><a href="https://ucladatares.medium.com/make-a-monet-image-style-transfer-with-cycle-gans-5475dcb525b8" target="_blank" rel="noopener">Make-A-Monet</a></h3>
-                        <p>Image style transfer with CycleGAN and Pix2Pix, served through a Plotly Dash app.</p>
-                    </div>
-                    <div class="project">
-                        <h3>California wildfire crisis</h3>
-                        <p>Led a team of six on a geospatial analysis of a decade of CAL FIRE data.</p>
-                    </div>
-                    <div class="project">
-                        <h3>COVID-19 vaccine rollout</h3>
-                        <p>Prophet forecasts of vaccination milestones, plus Twitter sentiment analysis.</p>
-                    </div>
-                </div>
             </div>
         </section>
 
