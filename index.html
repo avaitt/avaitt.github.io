@@ -151,7 +151,7 @@
         .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 20px; }
         .chip { background: var(--chip); border-radius: 8px; padding: 5px 10px; font-size: 13.5px; }
         h4 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
-        .awards { list-style: none; margin: 10px 0 0; padding: 0; }
+        .awards { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); column-gap: 32px; }
         .awards li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
         .awards li span { display: block; font-size: 13.5px; color: var(--muted); }
 
@@ -189,6 +189,7 @@
                 <li><a href="#domains">Domains</a></li>
                 <li><a href="#work">Featured work</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#awards">Awards</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -335,15 +336,25 @@
             </div>
         </section>
 
+        <section id="awards">
+            <div class="wrap">
+                <h2>Awards</h2>
+                <ul class="awards">
+                        <li>1st Place, Chevron Track<span>Rice University Datathon · 2021</span></li>
+                        <li>2nd Place, Prosperity Track<span>UCSD DataHacks · 2021</span></li>
+                        <li>1st Place Overall<span>DSS Datathon for Social Good, UC Berkeley · 2020</span></li>
+                        <li>3rd Place, City Search Track<span>TAMU Datathon · 2020</span></li>
+                        <li>2nd Place Overall<span>Retina AI R Datathon · 2020</span></li>
+                        <li>Gandhi Memorial Scholarship<span>San Diego Indian American Society · 2019</span></li>
+                    </ul>
+            </div>
+        </section>
+
         <section id="projects">
             <div class="wrap">
                 <h2>Projects &amp; competitions</h2>
                 <p class="section-sub">Earlier side projects, mostly from UCLA DataRes and datathons.</p>
                 <div class="projects">
-                    <div class="project">
-                        <h3><a href="https://devpost.com/software/rice-datathon-chevron-track" target="_blank" rel="noopener">Forecasting hot dog sales for Chevron</a></h3>
-                        <p>1st place in the Chevron track at the Rice Datathon. Lowest RMSE of 45 teams.</p>
-                    </div>
                     <div class="project">
                         <h3><a href="research/Retina.ai_Submission.pdf" target="_blank" rel="noopener">Customer lifetime value analysis</a></h3>
                         <p>Projected 5- and 10-year customer lifetime value for an eCommerce company and recommended focusing on its highest spenders. Won 2nd place overall at the Retina AI Datathon.</p>
@@ -360,16 +371,12 @@
                         <h3>COVID-19 vaccine rollout</h3>
                         <p>Prophet forecasts of vaccination milestones, plus Twitter sentiment analysis.</p>
                     </div>
-                    <div class="project">
-                        <h3><a href="https://adhvaith-vijay.shinyapps.io/cmsacamp-eda-project/" target="_blank" rel="noopener">Variability in baseball stadiums</a></h3>
-                        <p>R Shiny app showing how ballpark dimensions affect batting outcomes.</p>
-                    </div>
                 </div>
             </div>
         </section>
 
         <section id="skills">
-            <div class="wrap two">
+            <div class="wrap">
                 <div>
                     <h2>Toolkit</h2>
                     <h4>Languages &amp; ML</h4>
@@ -389,17 +396,6 @@
                         <span class="chip">A/B testing</span><span class="chip">Monte Carlo simulation</span>
                         <span class="chip">Tableau</span><span class="chip">Looker</span><span class="chip">Power BI</span><span class="chip">Plotly</span><span class="chip">Hex</span>
                     </div>
-                </div>
-                <div>
-                    <h2>Awards</h2>
-                    <ul class="awards">
-                        <li>1st Place, Chevron Track<span>Rice University Datathon · 2021</span></li>
-                        <li>2nd Place, Prosperity Track<span>UCSD DataHacks · 2021</span></li>
-                        <li>1st Place Overall<span>DSS Datathon for Social Good, UC Berkeley · 2020</span></li>
-                        <li>3rd Place, City Search Track<span>TAMU Datathon · 2020</span></li>
-                        <li>2nd Place Overall<span>Retina AI R Datathon · 2020</span></li>
-                        <li>Gandhi Memorial Scholarship<span>San Diego Indian American Society · 2019</span></li>
-                    </ul>
                 </div>
             </div>
         </section>
